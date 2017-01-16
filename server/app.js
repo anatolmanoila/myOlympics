@@ -15,4 +15,25 @@ app.get('/sports', (req, res) => {
   });
 });
 
+
+app.get('/sports/:name', (req, res) => {
+  let sportName = req.params.name;
+  console.log('Sport name: ', sportName);
+
+  let sport = {
+    "name": "Mountain Biking",
+    "goldMedals": [{
+      "division": "Men's Sprint",
+      "country": "RO",
+      "year": 2016
+    }, {
+      "division": "Men\'s line",
+      "country": "MD",
+      "year": 2016
+    }]
+  };
+
+  res.json(sport);
+});
+
 app.listen(5000, () => console.log('listening on http://localhost:5000'));
