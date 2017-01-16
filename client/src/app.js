@@ -18,32 +18,19 @@ angular.module('myOlympics', ['ui.router'])
         this.sports = sportsService.data;
       },
       controllerAs: 'sportsCtrl'
-    }).
-    state('sports.medals', {
+    })
+    .state('sports.medals', {
       url: '/:sportName',
       templateUrl: 'modules/sports/sports-medals.html',
-      resolve: {
-        sportService: function($q) {
-          return $q((resolve, reject) => {
-            let sport = {
-              "name": "Mountain Biking",
-              "goldMedals": [{
-                "division": "Men's Sprint",
-                "country": "RO",
-                "year": 2016
-              }, {
-                "division": "Men\'s line",
-                "country": "MD",
-                "year": 2016
-            }]
-          };
-          resolve( { data: sport } );
-          });
-        }
-      },
       controller: function(sportService) {
         this.sport = sportService.data;
       },
-      controllerAs: 'sportCtrl'
-    });
+      controllerAs: 'sportCtrl',
+      resolve: {
+        sportService: ['$http','$stateParams', function($http, $stateParams) {
+          console.log($stateParams);
+            return $http.get('/sports/' + $stateParams.sportName);
+          }]
+        }
+      });
 });

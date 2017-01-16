@@ -27,29 +27,16 @@ _angular2.default.module('myOlympics', ['ui.router']).config(function ($statePro
   }).state('sports.medals', {
     url: '/:sportName',
     templateUrl: 'modules/sports/sports-medals.html',
-    resolve: {
-      sportService: function sportService($q) {
-        return $q(function (resolve, reject) {
-          var sport = {
-            "name": "Mountain Biking",
-            "goldMedals": [{
-              "division": "Men's Sprint",
-              "country": "RO",
-              "year": 2016
-            }, {
-              "division": "Men\'s line",
-              "country": "MD",
-              "year": 2016
-            }]
-          };
-          resolve({ data: sport });
-        });
-      }
-    },
     controller: function controller(sportService) {
       this.sport = sportService.data;
     },
-    controllerAs: 'sportCtrl'
+    controllerAs: 'sportCtrl',
+    resolve: {
+      sportService: ['$http', '$stateParams', function ($http, $stateParams) {
+        console.log($stateParams);
+        return $http.get('/sports/' + $stateParams.sportName);
+      }]
+    }
   });
 });
 
