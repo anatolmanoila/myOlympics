@@ -7,7 +7,7 @@
     <th>Country</th>
   </thead>
   <tbody>
-    <tr ng-repeat="medal in sportCtrl.sport.goldMedals">
+    <tr ng-repeat="medal in sportCtrl.sport.goldMedals track by $index">
       <td>{{medal.year}}</td>
       <td>{{medal.division}}</td>
       <td>{{medal.country}}</td>
