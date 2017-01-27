@@ -23,12 +23,11 @@ app.get('/sports/:name', (req, res) => {
   let sportName = req.params.name;
   let sports = mongoUtil.sports();
 
-  console.log('Sport name: ', sportName);
   sports.find({ name: sportName }).limit(1).next((err, doc) => {
     if(err) {
       res.sendStatus(400);
     }
-    console.log('Sport doc: ', doc);
+    //console.log('Sport doc: ', doc);
     res.json(doc);
   });
 });

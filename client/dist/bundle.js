@@ -33,10 +33,21 @@ _angular2.default.module('myOlympics', ['ui.router']).config(function ($statePro
     controllerAs: 'sportCtrl',
     resolve: {
       sportService: ['$http', '$stateParams', function ($http, $stateParams) {
-        console.log($stateParams);
         return $http.get('/sports/' + $stateParams.sportName);
       }]
     }
+  }).state('sports.new', {
+    url: '/:sportName/medal/new',
+    templateUrl: 'modules/sports/new-medal.html',
+    controller: function controller($stateParams, $state) {
+      this.sportName = $stateParams.sportName;
+      this.saveMedal = function (medal) {
+        console.log('saved medal: ' + JSON.stringify(medal));
+
+        $state.go('sports.medals', { sportName: $stateParams.sportName }, { refresh: true });
+      };
+    },
+    controllerAs: 'newMedalCtrl'
   });
 });
 
